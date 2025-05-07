@@ -43,8 +43,8 @@ export default function TaskAddForm() {
         setTaskDate(new Date());
       }}
     >
-      <div className="flex flex-col md:flex-row gap-4 items-center">
-        <div className="flex-1 relative">
+      <div className="flex flex-col gap-4">
+        <div className="relative">
           <input
             type="text"
             id="todo-input"
@@ -67,19 +67,21 @@ export default function TaskAddForm() {
           </motion.span>
         </div>
 
-        <div className="w-full md:w-48">
-          <MyDatePicker date={taskDate} setDate={setTaskDate} />
-        </div>
+        <div className="flex flex-col sm:flex-row gap-3">
+          <div className="w-full sm:w-48">
+            <MyDatePicker date={taskDate} setDate={setTaskDate} />
+          </div>
 
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          type="submit"
-          className="flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
-        >
-          <Plus size={20} />
-          <span>Add Task</span>
-        </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            type="submit"
+            className="flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 sm:w-auto w-full"
+          >
+            <Plus size={20} />
+            <span>Add Task</span>
+          </motion.button>
+        </div>
       </div>
     </motion.form>
   );

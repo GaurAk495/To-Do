@@ -8,16 +8,10 @@ export default function TaskSummary() {
   const total = tasks.length;
   const percent = total === 0 ? 0 : Math.round((completed / total) * 100);
 
-  // Initialize motion value
   const spring = useMotionValue(0);
-
-  // Convert the motion value into degrees for the conic gradient
   const angle = useTransform(spring, [0, 100], [0, 360]);
-
-  // Store angle in state to trigger render
   const [angleDeg, setAngleDeg] = useState(0);
 
-  // Animate spring value when percent changes
   useEffect(() => {
     animate(spring, percent, {
       duration: 0.8,
@@ -26,7 +20,6 @@ export default function TaskSummary() {
     });
   }, [percent, spring]);
 
-  // Watch for angle changes
   useEffect(() => {
     const unsubscribe = angle.on("change", (latest) => {
       setAngleDeg(latest);
@@ -34,7 +27,6 @@ export default function TaskSummary() {
     return unsubscribe;
   }, [angle]);
 
-  // Mood message
   const getMood = () => {
     if (percent === 100) return { emoji: "🏆", msg: "You're unstoppable!" };
     if (percent >= 75) return { emoji: "🔥", msg: "Almost there!" };
@@ -45,42 +37,107 @@ export default function TaskSummary() {
 
   const { emoji, msg } = getMood();
 
-  return (
-    total > 0 && (
-      <section className="bg-white/80 backdrop-blur-md p-6 rounded-3xl shadow-xl sticky top-10 self-start w-full max-w-xs text-center border border-indigo-100 space-y-5">
-        <h2 className="text-2xl font-bold text-indigo-700">📊 Task Summary</h2>
+  if (!total) return null;
 
-        {/* Animated Conic Progress */}
+  return (
+    <motion.section
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+      className="bg-white/80 backdrop-blur-md p-4 sm:p-6 rounded-3xl shadow-xl w-full max-w-xs mx-auto text-center border border-indigo-100 space-y-4"
+    >
+      <motion.h2
+        className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2 }}
+      >
+        Task Overview
+      </motion.h2>
+
+      <div className="relative">
         <motion.div
-          className="w-32 h-32 mx-auto rounded-full relative"
+          className="w-28 h-28 sm:w-32 sm:h-32 mx-auto rounded-full relative"
           style={{
             background: `conic-gradient(#6366f1 ${angleDeg}deg, #e5e7eb ${angleDeg}deg)`,
           }}
         >
-          <div className="absolute inset-4 bg-white rounded-full flex items-center justify-center text-indigo-700 font-bold text-xl shadow-inner">
-            {percent}%
+          <motion.div
+            className="absolute inset-2 sm:inset-3 bg-white rounded-full flex items-center justify-center"
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.3 }}
+          >
+            <motion.span
+              className="text-2xl sm:text-3xl font-bold text-indigo-600"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+            >
+              {percent}%
+            </motion.span>
+          </motion.div>
+        </motion.div>
+      </div>
+
+      <motion.div
+        className="flex items-center justify-center gap-2 text-base sm:text-lg font-medium text-indigo-600"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5 }}
+      >
+        <motion.span
+          className="text-2xl sm:text-3xl"
+          animate={{
+            scale: [1, 1.2, 1],
+            rotate: [0, 10, -10, 0],
+          }}
+          transition={{
+            duration: 1.5,
+            repeat: Infinity,
+            repeatDelay: 2,
+          }}
+        >
+          {emoji}
+        </motion.span>
+        <span>{msg}</span>
+      </motion.div>
+
+      <motion.div
+        className="grid grid-cols-3 gap-2 text-sm"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.6 }}
+      >
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="p-3 rounded-xl bg-gradient-to-br from-green-50 to-green-100 shadow-sm"
+        >
+          <div className="text-green-600 font-semibold">Done</div>
+          <div className="text-xl font-bold text-green-700">{completed}</div>
+        </motion.div>
+
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="p-3 rounded-xl bg-gradient-to-br from-red-50 to-red-100 shadow-sm"
+        >
+          <div className="text-red-600 font-semibold">Left</div>
+          <div className="text-xl font-bold text-red-700">
+            {total - completed}
           </div>
         </motion.div>
 
-        {/* Motivational Message */}
-        <div className="text-indigo-600 text-lg font-medium flex items-center justify-center gap-2">
-          <span className="text-xl">{emoji}</span>
-          <span>{msg}</span>
-        </div>
-
-        {/* Task Breakdown */}
-        <div className="grid grid-cols-3 gap-2 text-sm font-semibold text-gray-700">
-          <div className="bg-green-100 text-green-700 rounded-xl p-2 shadow">
-            ✅ <br /> {completed}
-          </div>
-          <div className="bg-red-100 text-red-700 rounded-xl p-2 shadow">
-            ❌ <br /> {total - completed}
-          </div>
-          <div className="bg-indigo-100 text-indigo-700 rounded-xl p-2 shadow">
-            📋 <br /> {total}
-          </div>
-        </div>
-      </section>
-    )
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="p-3 rounded-xl bg-gradient-to-br from-indigo-50 to-indigo-100 shadow-sm"
+        >
+          <div className="text-indigo-600 font-semibold">Total</div>
+          <div className="text-xl font-bold text-indigo-700">{total}</div>
+        </motion.div>
+      </motion.div>
+    </motion.section>
   );
 }

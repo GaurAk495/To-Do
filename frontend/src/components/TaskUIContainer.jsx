@@ -23,7 +23,6 @@ export default function TaskUIContainer() {
         handleError("Error:", err.message);
       }
     }
-
     fetchTasks();
   }, []);
 
@@ -33,15 +32,11 @@ export default function TaskUIContainer() {
       return;
     }
 
-    if (
-      window.confirm(
-        "Are you sure you want to clear all tasks? This cannot be undone!"
-      )
-    ) {
+    if (window.confirm("Are you sure you want to clear all tasks? This cannot be undone!")) {
       try {
-        const response = await apiClient("/tasks/tasks-delete", "DELETE");
+        const response = await apiClient("/tasks-delete", "POST");
         if (response.success) {
-          dispatch(clearAllTasks([]));
+          dispatch(clearAllTasks());
           handleSuccess("All tasks cleared successfully!");
         }
       } catch (err) {
@@ -51,27 +46,27 @@ export default function TaskUIContainer() {
   };
 
   return (
-    <motion.main
+    <motion.main 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="max-w-6xl mx-auto px-4 py-10 h-[100vh] overflow-hidden"
+      className="max-w-6xl mx-auto px-4 py-6 min-h-[calc(100vh-80px)] relative"
     >
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 h-full">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <section
           id="todo-section"
-          className="bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-xl md:col-span-2 flex flex-col overflow-hidden border border-gray-100"
+          className="bg-white/90 backdrop-blur-md p-4 sm:p-6 rounded-2xl shadow-xl md:col-span-2 flex flex-col overflow-hidden border border-gray-100"
         >
-          <motion.div
+          <motion.div 
             initial={{ y: -20 }}
             animate={{ y: 0 }}
             className="space-y-4 flex-shrink-0"
           >
             <TaskAddForm />
-
-            <div className="flex items-center justify-between gap-4">
+            
+            <div className="flex flex-col sm:flex-row gap-4">
               <div className="flex items-center gap-3 bg-gray-50/80 p-2 rounded-lg flex-1">
-                <Filter size={18} className="text-blue-500" />
+                <Filter size={18} className="text-blue-500 shrink-0" />
                 <select
                   id="filter"
                   className="flex-1 p-2 bg-transparent border-none focus:outline-none focus:ring-0 text-gray-600"
@@ -85,23 +80,23 @@ export default function TaskUIContainer() {
               </div>
 
               <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={handleClearAll}
-                className={`flex items-center gap-2 px-4 py-2 cursor-pointer rounded-lg transition-colors duration-200 ${
-                  tasks.length
-                    ? "bg-red-500 hover:bg-red-600 text-white"
-                    : "bg-gray-100 text-gray-400 cursor-not-allowed"
+                className={`flex items-center justify-center gap-2 px-4 py-2 rounded-lg transition-colors duration-200 shrink-0 ${
+                  tasks.length 
+                    ? 'bg-red-500 hover:bg-red-600 text-white' 
+                    : 'bg-gray-100 text-gray-400 cursor-not-allowed'
                 }`}
                 disabled={!tasks.length}
               >
                 <Trash2 size={18} />
-                Clear All
+                <span className="sm:inline hidden">Clear All</span>
               </motion.button>
             </div>
           </motion.div>
 
-          <motion.div
+          <motion.div 
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2 }}
@@ -111,7 +106,10 @@ export default function TaskUIContainer() {
           </motion.div>
         </section>
 
-        <TaskSummary />
+        {/* Summary Section - Always on right */}
+        <div className="md:sticky md:top-4 h-fit">
+          <TaskSummary />
+        </div>
       </div>
     </motion.main>
   );

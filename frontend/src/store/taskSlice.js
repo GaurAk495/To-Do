@@ -28,12 +28,11 @@ const taskSlice = createSlice({
                 state[index].completed = action.payload.completed;
             }
         },
-        clearAllTasks: (state, action) => {
-            return action.payload
+        clearAllTasks: () => {
+            return [];
         }
-
     }
-})
+});
 
-export const { fetchTodos, addTaskItem, deleteTask, update, patch, clearAllTasks } = taskSlice.actions
-export default taskSlice.reducer
+export const { fetchTodos, addTaskItem, deleteTask, update, patch, clearAllTasks } = taskSlice.actions;
+export default taskSlice.reducer;
