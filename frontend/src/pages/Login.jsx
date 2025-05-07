@@ -62,19 +62,14 @@ export default function Login() {
           id="login-section"
           className="bg-white p-6 rounded-2xl shadow space-y-6"
         >
-          <form
-            id="login-form"
-            className="space-y-4"
-            onSubmit={handleOnSubmit}
-            autoComplete="off"
-          >
+          <form id="login-form" className="space-y-4" onSubmit={handleOnSubmit}>
             <div>
-              <label htmlFor="email" className="block font-medium mb-1">
+              <label htmlFor="new-email" className="block font-medium mb-1">
                 Email:
               </label>
               <input
                 type="email"
-                id="email"
+                id="new-email"
                 name="email"
                 placeholder="you@example.com"
                 required
@@ -84,12 +79,12 @@ export default function Login() {
             </div>
 
             <div>
-              <label htmlFor="password" className="block font-medium mb-1">
+              <label htmlFor="new-password" className="block font-medium mb-1">
                 Password:
               </label>
               <input
                 type="password"
-                id="password"
+                id="new-password"
                 name="password"
                 placeholder="Enter your password"
                 required
