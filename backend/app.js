@@ -8,7 +8,7 @@ import connectDB from './model/db.js'
 const app = express()
 
 app.use(cors({
-    origin: 'https://to-do-pink-seven.vercel.app/',
+    origin: 'https://to-do-pink-seven.vercel.app',
     credentials: true
 }));
 
