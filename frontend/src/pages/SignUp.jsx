@@ -60,25 +60,19 @@ export default function SignUp() {
       return handleError("You must accept the terms and conditions");
     }
 
-    try {
-      const data = await apiClient("/api/auth/signup", "POST", {
-        username,
-        email,
-        password,
-      });
-      const { success, message, error } = data;
-      debugger;
-      if (success) {
-        handleSuccess(message);
-        setTimeout(() => {
-          navigate("/login");
-        }, 1500);
-      } else if (error) {
-        handleError(error || message || "Signup failed");
-      }
-    } catch (err) {
-      handleError("Network error or server not responding");
-      console.log(err);
+    const data = await apiClient("/api/auth/signup", "POST", {
+      username,
+      email,
+      password,
+    });
+    const { success, message, error } = data;
+    if (success) {
+      handleSuccess(message);
+      setTimeout(() => {
+        navigate("/login");
+      }, 1500);
+    } else if (error) {
+      handleError(error || message || "Signup failed");
     }
   };
   return (
