@@ -38,7 +38,6 @@ export default function TaskUIContainer() {
       )
     ) {
       try {
-        debugger;
         const response = await apiClient("/tasks/clearAll", "POST");
         if (response.success) {
           dispatch(clearAllTasks());
