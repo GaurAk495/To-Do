@@ -38,12 +38,14 @@ export default function TaskUIContainer() {
       )
     ) {
       try {
-        const response = await apiClient("/tasks-delete", "POST");
+        debugger;
+        const response = await apiClient("/tasks/clearAll", "POST");
         if (response.success) {
           dispatch(clearAllTasks());
           handleSuccess("All tasks cleared successfully!");
         }
       } catch (err) {
+        console.log(err.message);
         handleError("Failed to clear tasks. Please try again.");
       }
     }

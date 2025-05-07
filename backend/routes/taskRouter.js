@@ -6,7 +6,7 @@ const taskRouter = express.Router()
 taskRouter.get('/', verifyToken, fetching)
 taskRouter.post('/', verifyToken, create)
 taskRouter.delete('/', verifyToken, taskDelete)
-taskRouter.delete('/tasks-delete', verifyToken, allTaskDelete)
+taskRouter.delete('/clearAll', verifyToken, allTaskDelete)
 taskRouter.put('/', verifyToken, update)
 taskRouter.patch('/', verifyToken, markComplete)
 

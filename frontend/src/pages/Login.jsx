@@ -64,31 +64,31 @@ export default function Login() {
         >
           <form id="login-form" className="space-y-4" onSubmit={handleOnSubmit}>
             <div>
-              <label htmlFor="new-email" className="block font-medium mb-1">
+              <label htmlFor="email" className="block font-medium mb-1">
                 Email:
               </label>
               <input
                 type="email"
-                id="new-email"
+                id="email"
                 name="email"
                 placeholder="you@example.com"
                 required
-                autoComplete="new-email"
+                autoComplete
                 className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
             </div>
 
             <div>
-              <label htmlFor="new-password" className="block font-medium mb-1">
+              <label htmlFor="password" className="block font-medium mb-1">
                 Password:
               </label>
               <input
                 type="password"
-                id="new-password"
+                id="password"
                 name="password"
                 placeholder="Enter your password"
                 required
-                autoComplete="new-password"
+                autoComplete
                 className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
             </div>

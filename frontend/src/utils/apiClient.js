@@ -20,6 +20,7 @@ export default async function apiClient(path, method = "GET", body = null) {
     }
     const res = await fetch(`${BASE_URL}${path}`, options);
     const data = await res.json();
+    debugger
     if (!res.ok) {
         throw new Error(data.error || data.message || "API request failed");
     }
