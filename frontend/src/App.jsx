@@ -8,10 +8,11 @@ import NotFound from "./pages/NotFound.jsx";
 import RefreshHandler from "./pages/RefreshHandler.jsx";
 import { useEffect } from "react";
 import { isAuthenticated } from "./utils/authenticated.js";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLogInStatus } from "./store/logSlice.js";
 
 function App() {
+  const loggedStatus = useSelector((store) => store.logStatus.status);
   const dispatch = useDispatch();
   useEffect(() => {
     async function authCheck() {
@@ -29,15 +30,24 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route
           path="/login"
-          element={<RefreshHandler children={<Login />} />}
+          element={
+            <RefreshHandler loggedStatus={loggedStatus} children={<Login />} />
+          }
         />
         <Route
           path="/signup"
-          element={<RefreshHandler children={<SignUp />} />}
+          element={
+            <RefreshHandler loggedStatus={loggedStatus} children={<SignUp />} />
+          }
         />
         <Route
           path="/app"
-          element={<ProtectedRoute children={<DashBoard />} />}
+          element={
+            <ProtectedRoute
+              loggedStatus={loggedStatus}
+              children={<DashBoard />}
+            />
+          }
         />
         <Route path="*" element={<NotFound />} />
       </Routes>

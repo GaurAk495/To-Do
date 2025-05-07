@@ -1,8 +1,6 @@
 import { Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 
-function RefreshHandler({ children }) {
-  const loggedStatus = useSelector((store) => store.logStatus.status);
+function RefreshHandler({ loggedStatus, children }) {
   if (loggedStatus) {
     return <Navigate to="/app" />;
   } else {
