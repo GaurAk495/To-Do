@@ -1,4 +1,4 @@
-const BASE_URL = "https://to-do-igqy.onrender.com";
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 const token = localStorage.getItem("token") || "";
 
