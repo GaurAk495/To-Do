@@ -1,4 +1,4 @@
-const BASE_URL = "https://to-do-igqy.onrender.com/";
+const BASE_URL = "https://to-do-igqy.onrender.com";
 
 const token = localStorage.getItem("token") || "";
 
