@@ -37,7 +37,6 @@ export default function Login() {
         email,
         password,
       });
-      debugger;
       const { success, message, error, token } = data;
       console.log(data);
       if (success) {
