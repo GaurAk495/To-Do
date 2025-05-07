@@ -32,7 +32,11 @@ export default function TaskUIContainer() {
       return;
     }
 
-    if (window.confirm("Are you sure you want to clear all tasks? This cannot be undone!")) {
+    if (
+      window.confirm(
+        "Are you sure you want to clear all tasks? This cannot be undone!"
+      )
+    ) {
       try {
         const response = await apiClient("/tasks-delete", "POST");
         if (response.success) {
@@ -46,7 +50,7 @@ export default function TaskUIContainer() {
   };
 
   return (
-    <motion.main 
+    <motion.main
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -57,13 +61,13 @@ export default function TaskUIContainer() {
           id="todo-section"
           className="bg-white/90 backdrop-blur-md p-4 sm:p-6 rounded-2xl shadow-xl md:col-span-2 flex flex-col overflow-hidden border border-gray-100"
         >
-          <motion.div 
+          <motion.div
             initial={{ y: -20 }}
             animate={{ y: 0 }}
             className="space-y-4 flex-shrink-0"
           >
             <TaskAddForm />
-            
+
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="flex items-center gap-3 bg-gray-50/80 p-2 rounded-lg flex-1">
                 <Filter size={18} className="text-blue-500 shrink-0" />
@@ -84,9 +88,9 @@ export default function TaskUIContainer() {
                 whileTap={{ scale: 0.98 }}
                 onClick={handleClearAll}
                 className={`flex items-center justify-center gap-2 px-4 py-2 rounded-lg transition-colors duration-200 shrink-0 ${
-                  tasks.length 
-                    ? 'bg-red-500 hover:bg-red-600 text-white' 
-                    : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                  tasks.length
+                    ? "bg-red-500 hover:bg-red-600 text-white"
+                    : "bg-gray-100 text-gray-400 cursor-not-allowed"
                 }`}
                 disabled={!tasks.length}
               >
@@ -96,7 +100,7 @@ export default function TaskUIContainer() {
             </div>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2 }}
